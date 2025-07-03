@@ -120,7 +120,7 @@ export default function HomePage() {
                      style={{background: 'linear-gradient(90deg, rgba(49, 130, 206, 1) 0%, rgba(56, 178, 172, 1) 100%)'}}>
               <div className="absolute inset-0 z-0">
                 <Image 
-                  src="/images/cover-bg.jpg" 
+                  src="images/cover-bg.jpg" 
                   alt="Dental office background" 
                   fill
                   className="object-cover opacity-20"
@@ -154,7 +154,7 @@ export default function HomePage() {
               <div className="relative w-full max-w-md mx-auto lg:mx-0">
                 <div className="aspect-[4/5] relative rounded-2xl overflow-hidden shadow-xl">
                   <Image 
-                    src="/images/doctor.png?v=2" 
+                    src="images/doctor.png?v=2" 
                     alt="노재찬 원장" 
                     fill
                     className="object-contain"

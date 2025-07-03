@@ -16,8 +16,8 @@ export default function DirectionsSection() {
             <div className="bg-gray-100 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 mx-auto max-w-[30em]">
               <div className="aspect-square relative">
                 <Image 
-                  src="/images/directions.png" 
-                  alt="미금병원 위치 지도" 
+                  src="images/directions.png" 
+                  alt="병원 위치 지도" 
                   fill
                   className="object-cover hover:scale-105 transition-transform duration-300"
                 />

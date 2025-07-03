@@ -9,7 +9,7 @@ export default function CTASection() {
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <Image 
-            src="/images/lobby.jpeg" 
+            src="images/lobby.jpeg" 
             alt="Dental office background" 
             fill
             className="object-cover opacity-90"
