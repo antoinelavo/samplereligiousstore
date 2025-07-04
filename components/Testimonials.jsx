@@ -1,53 +1,46 @@
 export default function Testimonials() {
   const testimonials = [
     {
-      name: "금방***",
+      name: "김민*",
       age: "",
       treatment: "스케일링",
       rating: 5,
-      text: "스케일링 하러 방문했는데 안아프게 세심히 잘 해주셨어요. 어떤에 10년 이상 된 보철도 상의로 다시 치료받기로 했네요. 병원도 친절히 설명해주셔서 온고 가는 치과입니다."
+      text: "스케일링 받으러 방문했는데 전혀 아프지 않게 꼼꼼히 해주셨어요. 오래된 보철 상태도 상세히 설명해주시고 치료 계획도 친절하게 안내받았습니다. 믿고 다닐 수 있는 치과예요."
     },
     {
-      name: "bobeullu61",
-      age: "",
-      treatment: "임플란트",
-      rating: 5,
-      text: "사랑니 뽑으러 갔어요. 진짜 10분만에 뽑았고 지금 8시간정도 지났는데 안아파요! 얼굴도 안부어서 바로 일상생활 했어여 뽑을때 치과 특유에 무서운 소리도 안나서 안무서웠구 귀여운 오리 인형도 빌려주셧어여🐥 아 글고 미금역 근처라 교통도 좋은듯"
-    },
-    {
-      name: "joy****",
-      age: "",
-      treatment: "치료상담",
-      rating: 5,
-      text: "자세한 설명과 추후 치료과정들을 차분히 설명해 주셔서 감사했습니다. 치아 발치후 대치시술도 잘 설명해 주셔서 감사했습니다~^^"
-    },
-    {
-      name: "싸리누나",
+      name: "이서*",
       age: "",
       treatment: "사랑니 발치",
       rating: 5,
-      text: "동생이 다녀오고 추천한다고 해서 사랑니 발치하러 다녀왔습니다!!! 마취하는게 아플까 걱정했는데 하나도 안아프게 잘해주셨어요. 엄청 친절하셔서 기분 좋게 진료 받고 왔습니다. 추천해요~~👍👍"
+      text: "사랑니 발치가 무서웠는데 정말 빠르고 깔끔하게 해주셨어요. 마취도 전혀 아프지 않았고 수술 후에도 붓기나 통증이 거의 없어서 바로 일상생활 가능했습니다. 너무 만족해요!"
     },
     {
-      name: "fl****",
+      name: "박지*",
       age: "",
       treatment: "치료상담",
       rating: 5,
-      text: "원장님께서 쉽고 깔끔하게 설명도 잘해주시고 겁이 많아서 치과 무서워하는데 마음 편하게 해주셔서 다음에 또 오려구요."
+      text: "치료 과정을 자세히 설명해주셔서 안심이 되었습니다. 발치 후 치료 옵션들도 꼼꼼히 상담해주시고 환자 입장에서 최선의 방법을 제안해주셔서 감사했어요."
     },
     {
-      name: "yyjrock",
+      name: "최수*",
       age: "",
-      treatment: "진료상담",
+      treatment: "임플란트",
       rating: 5,
-      text: "너무 친절한 데스크, 정확한 진단과 상세한 설명까지 최고입니다! 과잉진료를 안하시는 이 시대에 참 된 병원! 찬스플란트치과의원으로 오세요 🙏🏻"
+      text: "지인 추천으로 임플란트 상담받으러 왔어요. 마취 과정도 전혀 아프지 않게 해주시고 수술 내내 세심하게 배려해주셔서 편안하게 받을 수 있었습니다. 정말 친절한 곳이에요."
     },
     {
-      name: "갱이8350",
+      name: "윤정*",
       age: "",
-      treatment: "치료상담",
+      treatment: "일반진료",
       rating: 5,
-      text: "네이버 리뷰보고 첫방문했어요. 의사선생님, 간호사분들 모두 친절하게 잘 설명해주셨어요. 치과는 늘 가기 무서운곳인데... 모두 친절하게 응대해주시니까 마음이 놓이더라고요. 남은 치료도 잘 받겠습니다!^^"
+      text: "치과 공포증이 있어서 항상 긴장했는데 원장님께서 차근차근 설명해주시고 편안하게 해주셔서 마음이 놓였어요. 다음에도 꼭 여기서 치료받으려고 합니다."
+    },
+    {
+      name: "한민*",
+      age: "",
+      treatment: "정기검진",
+      rating: 5,
+      text: "정기검진차 방문했는데 꼼꼼한 진단과 상세한 설명이 인상적이었습니다. 과잉진료 없이 정말 필요한 치료만 권해주시는 믿을 수 있는 치과입니다. 적극 추천해요!"
     }
   ];
 
@@ -57,7 +50,7 @@ export default function Testimonials() {
         {[...Array(5)].map((_, i) => (
           <svg 
             key={i} 
-            className={`w-4 h-4 ${i < rating ? 'text-yellow-400' : 'text-gray-300'}`} 
+            className={`w-4 h-4 ${i < rating ? 'text-orange-400' : 'text-gray-300'}`} 
             fill="currentColor" 
             viewBox="0 0 20 20"
           >
@@ -69,106 +62,52 @@ export default function Testimonials() {
   };
 
   return (
-    <>
-      <style jsx>{`
-        @keyframes scroll-testimonials {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
+    <section className="relative bg-gray-50 py-16 lg:py-32">
+      <div className="px-4 sm:px-8 lg:px-16 xl:px-40 2xl:px-64">
         
-        .animate-scroll-testimonials {
-          animation: scroll-testimonials 10s linear infinite;
-        }
-        
-        .animate-scroll-testimonials:hover {
-          animation-play-state: paused;
-        }
-      `}</style>
-
-      <section className="relative bg-gray-50 py-16 lg:py-32 overflow-hidden">
-        <div className="px-4 sm:px-8 lg:px-16 xl:px-40 2xl:px-64 mb-12">
-          
-          {/* Section Header */}
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">환자 후기</h2>
-            <p className="text-gray-600 text-lg">저희 병원에서 치료받으신 환자분들의 생생한 후기입니다</p>
-            <div className="w-20 h-1 bg-gradient-to-r from-blue-600 to-teal-500 mx-auto mt-4 rounded-full"></div>
-          </div>
+        {/* Section Header */}
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">환자 후기</h2>
+          <p className="text-gray-600 text-lg">저희 병원에서 치료받으신 환자분들의 생생한 후기입니다</p>
+          <div className="w-20 h-1 bg-gradient-to-r from-gray-600 to-orange-500 mx-auto mt-4"></div>
         </div>
 
-        {/* Scrolling testimonials */}
-        <div className="relative">
-          <div className="flex animate-scroll-testimonials whitespace-nowrap">
-            
-            {/* First set of testimonials */}
-            {testimonials.map((testimonial, index) => (
-              <div 
-                key={`first-${index}`}
-                className="inline-block bg-white rounded-2xl shadow-lg p-6 mx-4 w-80 flex-shrink-0"
-                style={{ whiteSpace: 'normal' }}
-              >
-                <div className="mb-4">
-                  <StarRating rating={testimonial.rating} />
-                </div>
-                
-                <p className="text-gray-700 leading-relaxed mb-6 text-sm">
-                  "{testimonial.text}"
-                </p>
-                
-                <div className="border-t border-gray-100 pt-4">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="font-semibold text-gray-900">{testimonial.name}</p>
-                      <p className="text-sm text-gray-600">{testimonial.age}</p>
-                    </div>
-                    <div className="text-right">
-                      <div className="bg-gradient-to-r from-blue-600 to-teal-500 text-white px-3 py-1 rounded-full text-xs font-medium">
-                        {testimonial.treatment}
-                      </div>
+        {/* Testimonials Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          {testimonials.map((testimonial, index) => (
+            <div 
+              key={index}
+              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300"
+            >
+              <div className="mb-4">
+                <StarRating rating={testimonial.rating} />
+              </div>
+              
+              <p className="text-gray-700 leading-relaxed mb-6 text-sm">
+                "{testimonial.text}"
+              </p>
+              
+              <div className="border-t border-gray-100 pt-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-semibold text-gray-900">{testimonial.name}</p>
+                  </div>
+                  <div className="text-right">
+                    <div className="bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-medium">
+                      {testimonial.treatment}
                     </div>
                   </div>
                 </div>
               </div>
-            ))}
-            
-            {/* Duplicate set for seamless loop */}
-            {testimonials.map((testimonial, index) => (
-              <div 
-                key={`second-${index}`}
-                className="inline-block bg-white rounded-2xl shadow-lg p-6 mx-4 w-80 flex-shrink-0"
-                style={{ whiteSpace: 'normal' }}
-              >
-                <div className="mb-4">
-                  <StarRating rating={testimonial.rating} />
-                </div>
-                
-                <p className="text-gray-700 leading-relaxed mb-6 text-sm">
-                  "{testimonial.text}"
-                </p>
-                
-                <div className="border-t border-gray-100 pt-4">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="font-semibold text-gray-900">{testimonial.name}</p>
-                      <p className="text-sm text-gray-600">{testimonial.age}</p>
-                    </div>
-                    <div className="text-right">
-                      <div className="bg-gradient-to-r from-blue-600 to-teal-500 text-white px-3 py-1 rounded-full text-xs font-medium">
-                        {testimonial.treatment}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
 
         {/* Bottom CTA */}
-        <div className="text-center mt-12 px-4 sm:px-8 lg:px-16 xl:px-40 2xl:px-64">
+        <div className="text-center">
           <a 
             href="https://booking.naver.com/booking/13/bizes/326974" 
-            className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-teal-500 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-teal-600 transition-all duration-300 shadow-lg hover:shadow-xl"
+            className="inline-flex items-center px-8 py-4 bg-orange-500 text-white font-semibold rounded-lg hover:bg-orange-600 transition-all duration-300 shadow-lg hover:shadow-xl"
           >
             진료 예약하기
             <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -176,7 +115,7 @@ export default function Testimonials() {
             </svg>
           </a>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
-}
+};
