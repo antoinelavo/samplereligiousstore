@@ -67,7 +67,7 @@ export default function GreetingSection() {
               <div className="flex flex-col md:flex-row md:items-center md:justify-between">
                 <div>
                   <p className="text-xl font-bold text-gray-900 mb-1">정지원</p>
-                  <p className="text-orange-600 font-semibold mb-1">서울더믿음치과의원치과 대표원장</p>
+                  <p className="text-orange-600 font-semibold mb-1">서울더믿음치과의원 대표원장</p>
                   <p className="text-gray-600 text-sm">치과보철과 전문의</p>
                 </div>
               </div>

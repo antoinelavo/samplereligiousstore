@@ -61,7 +61,7 @@ export default function HomePage() {
             <div className="flex flex-wrap items-center justify-between py-4">
               <div className="w-1/2 md:w-auto">
                 <a href="/" className="text-gray-800 font-bold text-2xl">
-                  서울더믿음치과의원치과
+                  서울더믿음치과의원
                 </a>
               </div>
 
@@ -110,7 +110,7 @@ export default function HomePage() {
           <div className="w-full text-center relative z-10">
             <div className="max-w-4xl mx-auto">
               <h1 className="text-white text-4xl md:text-5xl xl:text-6xl font-bold leading-tight mb-6">
-                서울더믿음치과의원치과
+                서울더믿음치과의원
               </h1>
               <p className="text-gray-300 text-xl md:text-2xl leading-snug mb-8">
                 마음에 믿음을 심는 전문의료진의 따뜻하고 세심한 치과치료
@@ -261,7 +261,7 @@ export default function HomePage() {
         <footer id="contact" className="relative bg-gray-900 text-white px-4 sm:px-8 lg:px-16 xl:px-40 2xl:px-64 py-12 lg:py-24">
           <div className="flex flex-col md:flex-row">
             <div className="w-full lg:w-2/6 lg:mx-4 lg:pr-8">
-              <h3 className="font-bold text-2xl">서울더믿음치과의원치과</h3>
+              <h3 className="font-bold text-2xl">서울더믿음치과의원</h3>
             </div>
 
             <div className="w-full lg:w-1/6 mt-8 lg:mt-0 lg:mx-4">
