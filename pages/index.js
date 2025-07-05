@@ -147,14 +147,14 @@ const BarberShopHomepage = () => {
       
       }</style>
 
-      {/* Navigation */}
-      <nav className="absolute top-0 left-0 right-0 z-50 bg-black">
-        <div className="max-w-7xl mx-auto px-6 py-6">
+      {/* Navigation Header */}
+      <nav className="absolute top-0 left-0 right-0 z-50 mx-auto px-[2em]">
+        <div className="max-w-[1000px] mx-auto px-6 py-6">
           <div className="flex justify-between items-center">
             <img src="images/mainlogo.png" className="w-[5em]"></img>
 
             <div className="flex space-x-12 korean-sans text-sm font-medium tracking-wider">
-              <a href="#home" className="text-white hover:text-gray-300 transition-colors duration-300">
+              <a href="https://m.place.naver.com/hairshop/1108637524/stylist?entry=plt" className="text-white hover:text-gray-300 transition-colors duration-300">
                 예약하기
               </a>
             </div>
@@ -271,8 +271,8 @@ const BarberShopHomepage = () => {
           <p className="korean-sans text-sm text-gray-500 mb-2">
             영업시간
           </p>
-          <p className="serif-font korean-sans text-md text-white ">
-            매일: 10AM - 8PM
+          <p className="serif-font text-md text-white ">
+            매일: &nbsp;10 AM - 8 PM
           </p>
           
         </div>
