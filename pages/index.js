@@ -5,55 +5,26 @@ const BarberShopHomepage = () => {
     {
       name: "Wet",
       image: "images/Wet.png",
-      specialty: "고객님의 멋진 남자가 되어가는 과정, 세심하게 함께 하겠습니다.",
-      experience: "15년"
+      specialty: "고객님의 멋진 남자가 되어가는 과정, 세심하게 함께 하겠습니다."
     },
     {
       name: "Zet",
       image: "images/Zet.png",
-      specialty: "깔끔한 남성상을 지향하며 디자인합니다. 간결하지만 섬세하게, 정성을 다하겠습니다.",
-      experience: "8년"
+      specialty: "깔끔한 남성상을 지향하며 디자인합니다. 간결하지만 섬세하게, 정성을 다하겠습니다."
     },
     {
       name: "Dean",
       image: "images/Dean.png",
-      specialty: "자세한 상담을 통해 고객님의 스타일을 찾아드리고, 찾아주신 만큼 정성을 다해 최고의 서비스로 보답해드리겠습니다.",
-      experience: "22년"
+      specialty: "자세한 상담을 통해 고객님의 스타일을 찾아드리고, 찾아주신 만큼 정성을 다해 최고의 서비스로 보답해드리겠습니다."
     },
         {
       name: "Rua",
       image: "images/Rua.png",
-      specialty: "스타일의 경계를 두지않고, 고객님 단 한 분 만의 퍼스널스타일을 시현해드립니다.",
-      experience: "22년"
+      specialty: "스타일의 경계를 두지않고, 고객님 단 한 분 만의 퍼스널스타일을 시현해드립니다."
     }
   ];
 
-  const services = [
-    {
-      name: "클래식 젠틀맨",
-      image: "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=300&h=300&fit=crop",
-      price: "₩65,000",
-      description: "가위 컷과 스타일링이 포함된 클래식한 컷"
-    },
-    {
-      name: "모던 페이드",
-      image: "https://images.unsplash.com/photo-1621607512214-68297480165e?w=300&h=300&fit=crop",
-      price: "₩50,000",
-      description: "정밀한 클리퍼 작업으로 완성하는 현대적 페이드"
-    },
-    {
-      name: "풀 서비스",
-      image: "https://images.unsplash.com/photo-1622296789567-92cb45c37c92?w=300&h=300&fit=crop",
-      price: "₩95,000",
-      description: "컷, 샴푸, 수염 트림, 핫타월 트리트먼트"
-    },
-    {
-      name: "수염 스컬프팅",
-      image: "https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=300&h=300&fit=crop",
-      price: "₩35,000",
-      description: "전문적인 수염 디자인과 컨디셔닝"
-    }
-  ];
+
 
   const haircuts = [
   { image: "images/cut1.png", name: "에즈 x 아이롱펌" },
@@ -132,16 +103,6 @@ const BarberShopHomepage = () => {
           border-color: white;
         }
         
-        .hero-bg {
-          background-image: url('images/barbershop2.jpeg');
-          background-size: cover;
-          background-position: center;
-          background-attachment: fixed;
-        }
-        
-        .dark-overlay {
-          background: rgba(0, 0, 0, 0.75);
-        }
           
       `
       
@@ -163,9 +124,16 @@ const BarberShopHomepage = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen hero-bg flex items-center justify-center grayscale">
-        <div className="absolute inset-0 dark-overlay"></div>
-        
+    <section className="relative min-h-screen flex items-center justify-center">
+      <div className="absolute inset-0">
+        <img
+          src="images/barbershop2.jpeg"
+          alt="Barbershop"
+          className="w-full h-full object-cover filter grayscale"
+        />
+        <div className="absolute inset-0 bg-black opacity-80"></div>
+      </div>
+            
         <div className="relative z-10 text-center text-white px-6">
           <h2 className="serif-font text-6xl md:text-6xl font-bold text-white tracking-widest">
             DAVID
