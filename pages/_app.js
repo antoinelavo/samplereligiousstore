@@ -1,18 +1,20 @@
+// pages/_app.js
+import PeekingCorgi from "@/components/PeekingCorgi";
 import "@/styles/globals.css";
-import { Noto_Sans_KR } from "next/font/google";
+import { Jua } from 'next/font/google'
 
-const notoSansKR = Noto_Sans_KR({
-    variable: "--fonts--noto-sans-kr",
-    subsets: ["latin"],
+const jua = Jua({
+  weight: '400',
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-jua',
 })
 
-
-export default function RootLayout({ Component, pageProps }) {
+export default function App({ Component, pageProps }) {
   return (
-    <html lang="en" className={notoSansKR.className}>
-      <body className="min-h-screen min-w-screen bg-gray-50">
-        <Component {...pageProps} />
-      </body>
-    </html>
+    <main className={`${jua.className} min-h-screen min-w-screen bg-gray-50 pt-20`}>
+      <Component {...pageProps} />
+      <PeekingCorgi/>
+    </main>
   );
 }

@@ -3,7 +3,7 @@ import ScrollHeader from '@/components/Header'
 import Items from '@/components/Items'
 import Footer from '@/components/Footer'
 
-const BarberShopHomepage = () => {
+const ShelfPage = () => {
   const shelves = [
     {
       name: "Corgi",
@@ -83,4 +83,4 @@ const BarberShopHomepage = () => {
   );
 };
 
-export default BarberShopHomepage;
+export default ShelfPage;
