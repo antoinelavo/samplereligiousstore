@@ -30,7 +30,7 @@ export default function ItemPage({ item }) {
 
           {/* Main image display */}
           <div className="mb-8">
-            <div className="relative aspect-[1.5/1] max-w-3xl mx-auto bg-gray-100 rounded-lg overflow-hidden">
+            <div className="relative aspect-[1.5/1] max-w-3xl mx-auto bg-gray-100 overflow-hidden">
               <img
                 src={item.images[selectedImage]}
                 alt={`${item.name} - Image ${selectedImage + 1}`}
@@ -47,7 +47,7 @@ export default function ItemPage({ item }) {
               <button
                 key={index}
                 onClick={() => setSelectedImage(index)}
-                className={`relative w-20 aspect-[1.5/1] rounded-lg overflow-hidden border-2 transition-all duration-200 ${
+                className={`relative w-20 aspect-[1.5/1] overflow-hidden border-2 transition-all duration-200 ${
                   selectedImage === index 
                     ? 'border-black scale-105' 
                     : 'border-gray-200 hover:border-gray-400'
@@ -64,7 +64,7 @@ export default function ItemPage({ item }) {
           </div>
 
           {/* Additional details */}
-        <div className="rounded-xl w-fit mx-auto p-[2em]">
+        <div className="w-fit mx-auto p-[2em]">
             <div className="max-w-3xl mx-auto text-center">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div>
@@ -94,7 +94,7 @@ export default function ItemPage({ item }) {
 
 
         <div className="flex justify-center mt-[5em]">
-            <a href="https://smartstore.naver.com/out_of_place" className="border border-gray-400 rounded-xl p-[1em] text-2xl">
+            <a href="https://smartstore.naver.com/out_of_place" className="border border-gray-400 p-[1em] text-2xl">
             Buy now
             </a>
         </div>

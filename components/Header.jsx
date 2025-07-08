@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import SandwichMenu from './SandwichMenu';
 
 export default function ScrollHeader() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -24,7 +25,9 @@ export default function ScrollHeader() {
         //   : '-translate-y-full opacity-0'
       `}>
         <div className="max-w-[1000px] mx-auto px-6 py-6">
-          <div className="flex justify-center items-center">
+          <div className="flex justify-between items-center">
+            <div></div>
+
             <a href="/">
               <img src="/images/logo.png" alt="Logo" className="w-[5em]"/>
             </a>
@@ -37,6 +40,8 @@ export default function ScrollHeader() {
                 구매하기
               </a>
             </div> */}
+            
+            <SandwichMenu/>
           </div>
         </div>
       </nav>

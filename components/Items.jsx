@@ -45,7 +45,7 @@ export default function Items({
                 className={`${itemBackgroundColor} border ${borderColor} max-w-[20em] mx-auto group cursor-pointer transition-transform duration-300 hover:scale-105`}
               >
             <a href={`/item/${item.name.toLowerCase()}`}>
-                <div className="relative overflow-hidden rounded-xl">
+                <div className="relative overflow-hidden">
                   {/* Default image */}
                   <img 
                     src={item.image} 
@@ -61,7 +61,7 @@ export default function Items({
                   />
                 </div>
             </a>
-                <div className="p-6">
+                <div className="py-6">
                   <h4 className={`${titleClassName} ${textColor}`}>
                     {item.name || item.title}
                   </h4>
