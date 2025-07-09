@@ -266,45 +266,45 @@ export default function AdminDashboard() {
           // Edit Form Modal
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-              <h2 className="text-xl font-semibold mb-4">Edit Item</h2>
+              <h2 className="text-xl font-semibold mb-4">상품 수정하기</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <input
                   type="text"
-                  placeholder="Category"
+                  placeholder="종류"
                   value={editForm.category || ''}
                   onChange={(e) => setEditForm({...editForm, category: e.target.value})}
                   className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <input
                   type="text"
-                  placeholder="Name"
+                  placeholder="이름"
                   value={editForm.name || ''}
                   onChange={(e) => setEditForm({...editForm, name: e.target.value})}
                   className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <input
                   type="text"
-                  placeholder="Price"
+                  placeholder="가격 - 단위는 원 (쉼표 없이 숫자만 적어주세요 - 예: 10000)"
                   value={editForm.price || ''}
                   onChange={(e) => setEditForm({...editForm, price: e.target.value})}
                   className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <input
                   type="url"
-                  placeholder="Main Image URL"
+                  placeholder="메인 사진 URL"
                   value={editForm.image || ''}
                   onChange={(e) => setEditForm({...editForm, image: e.target.value})}
                   className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <input
                   type="url"
-                  placeholder="Hover Image URL"
+                  placeholder="커서 올렸을때 사진 URL"
                   value={editForm.hoverImage || ''}
                   onChange={(e) => setEditForm({...editForm, hoverImage: e.target.value})}
                   className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <textarea
-                  placeholder="Description"
+                  placeholder="설명"
                   value={editForm.description || ''}
                   onChange={(e) => setEditForm({...editForm, description: e.target.value})}
                   className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
