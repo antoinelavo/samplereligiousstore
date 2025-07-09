@@ -6,20 +6,20 @@ import Footer from '@/components/Footer'
 const BarberShopHomepage = () => {
   const shelves = [
     {
-      name: "Corgi",
+      name: "CORGI",
       image: "images/shelf/front1.jpeg",
-      description: "This is a very cool corgi and it does things that corgis do",
+      description: "THIS IS A VERY COOL CORGI AND IT DOES THINGS CORGIS DO",
       price: "KRW 10,000"
     },
     {
-      name: "Pommy",
+      name: "POMMY",
       image: "images/shelf/front2.jpeg",
       description: "This is a very cool pommy and it does things that pommies do",
       price: "KRW 10,000"
 
     },
     {
-      name: "Poodle",
+      name: "POODLE",
       image: "images/shelf/front3.jpeg",
       description: "This is a very cool poodle and it does things that poodles do",
       price: "KRW 10,000"

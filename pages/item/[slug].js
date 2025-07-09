@@ -93,11 +93,17 @@ export default function ItemPage({ item }) {
 
 
 
-        <div className="flex justify-center mt-[5em]">
-            <a href="https://smartstore.naver.com/out_of_place" className="border border-gray-400 p-[1em] text-2xl">
-            Buy now
-            </a>
-        </div>
+    <div className="flex justify-center ">
+        <a href="https://smartstore.naver.com/out_of_place" className="border border-gray-400 p-[1em] text-2xl">
+        Buy now
+        </a>
+    </div>
+
+    <div id="detailsPage" className="bg-gray-300 h-[100em] max-w-[1000px] mt-[6em] mx-auto">
+        <p className="text-black text-lg text-center pt-[5em]">
+            상세페이지
+        </p>
+    </div>
       </main>
     </div>
     <Footer/>
@@ -131,7 +137,7 @@ export async function getStaticProps({ params }) {
   // This would typically fetch from your database or CMS
   const items = {
     corgi: {
-      name: "Corgi",
+      name: "CORGI",
       slug: "corgi",
       description: "Adorable corgi with short legs and big personality. Perfect companion for any home.",
       images: [
@@ -147,7 +153,7 @@ export async function getStaticProps({ params }) {
       price: "10,000 KRW"
     },
     pommy: {
-      name: "Pommy", 
+      name: "POMMY", 
       slug: "pommy",
       description: "Fluffy pomeranian with luxurious coat and charming smile.",
       images: [
@@ -164,7 +170,7 @@ export async function getStaticProps({ params }) {
 
     },
     poodle: {
-      name: "Poodle",
+      name: "POODLE",
       slug: "poodle", 
       description: "Elegant poodle with curly coat and sophisticated demeanor.",
       images: [

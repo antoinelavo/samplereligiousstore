@@ -2,6 +2,21 @@ import React from 'react';
 import ScrollHeader from '@/components/Header'
 import Items from '@/components/Items'
 import Footer from '@/components/Footer'
+import { supabase } from '@/lib/supabase'
+
+const fetchData = async () => {
+  const { data, error } = await supabase
+    .from('items')
+    .select('*')
+  
+  if (error) {
+    console.error('Error:', error)
+  } else {
+    console.log('Data:', data)
+  }
+}
+
+
 
 const ShelfPage = () => {
   const shelves = [
@@ -26,18 +41,6 @@ const ShelfPage = () => {
     },
   ];
 
-
-
-  const haircuts = [
-  { image: "images/cut1.png", name: "에즈 x 아이롱펌" },
-  { image: "images/cut2.png", name: "아이비리그 x 다운펌" },
-  { image: "images/cut3.png", name: "세미크롭" },
-  { image: "images/cut4.png", name: "크롭 x 다운펌" },
-  { image: "images/cut5.png", name: "가일리프 x 다운펌" },
-  { image: "images/cut6.png", name: "리젠트 & 숏가일 x 다운펌" },
-  { image: "images/cut7.png", name: "댄디리프 x 볼륨매직" },
-  { image: "images/cut8.png", name: "가일 x 아이롱펌" }
-];
 
   return (
     <div className="min-h-screen bg-black">
@@ -68,8 +71,6 @@ const ShelfPage = () => {
           sectionId="shelves"
         />
 
-      
-
       {/* Footer */}
       <Footer 
         companyName="Out of Place Object"
@@ -83,4 +84,5 @@ const ShelfPage = () => {
   );
 };
 
+fetchData();
 export default ShelfPage;
