@@ -199,45 +199,45 @@ export default function AdminDashboard() {
         {/* Add New Item Form */}
         {showAddForm && (
           <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-            <h2 className="text-xl font-semibold mb-4">Add New Item</h2>
+            <h2 className="text-xl font-semibold mb-4">상품 추가하기</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <input
                 type="text"
-                placeholder="Category"
+                placeholder="종류"
                 value={newItem.category}
                 onChange={(e) => setNewItem({...newItem, category: e.target.value})}
                 className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <input
                 type="text"
-                placeholder="Name"
+                placeholder="이름"
                 value={newItem.name}
                 onChange={(e) => setNewItem({...newItem, name: e.target.value})}
                 className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <input
                 type="text"
-                placeholder="Price (e.g., KRW 10,000)"
+                placeholder="가격 - 단위는 원 (쉼표 없이 숫자만 적어주세요 - 예: 10000)"
                 value={newItem.price}
                 onChange={(e) => setNewItem({...newItem, price: e.target.value})}
                 className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <input
                 type="url"
-                placeholder="Main Image URL"
+                placeholder="메인 사진 URL"
                 value={newItem.image}
                 onChange={(e) => setNewItem({...newItem, image: e.target.value})}
                 className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <input
                 type="url"
-                placeholder="Hover Image URL (optional)"
+                placeholder="커서 올렸을때 사진 URL"
                 value={newItem.hoverImage}
                 onChange={(e) => setNewItem({...newItem, hoverImage: e.target.value})}
                 className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <textarea
-                placeholder="Description"
+                placeholder="설명"
                 value={newItem.description}
                 onChange={(e) => setNewItem({...newItem, description: e.target.value})}
                 className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
