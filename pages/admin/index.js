@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Pencil, Trash2, Plus, Save, X } from 'lucide-react';
+import { Pencil, Trash2, Plus, Save, X, Upload, Image as ImageIcon } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import Header from '@/components/Header'
 
@@ -10,15 +10,159 @@ export default function AdminDashboard() {
   const [editForm, setEditForm] = useState({});
   const [newItem, setNewItem] = useState({
     category: '',
+    subcategory: '',
     name: '',
     description: '',
     price: '',
     image: '',
-    hoverImage: ''
+    hoverImage: '',
+    descriptionImage: '',
+    additionalImages: []
   });
   const [showAddForm, setShowAddForm] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [uploading, setUploading] = useState(false);
+
+  // Image upload function
+  const uploadImage = async (file, folder = 'products') => {
+    if (!file) return null;
+
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
+    const filePath = `${folder}/${fileName}`;
+
+    const { data, error } = await supabase.storage
+      .from('product-images') // Make sure this bucket exists in your Supabase Storage
+      .upload(filePath, file);
+
+    if (error) {
+      console.error('Upload error:', error);
+      throw error;
+    }
+
+    // Get public URL
+    const { data: { publicUrl } } = supabase.storage
+      .from('product-images')
+      .getPublicUrl(filePath);
+
+    return publicUrl;
+  };
+
+  // Handle main image upload
+  const handleMainImageUpload = async (file, isEdit = false) => {
+    if (!file) return;
+
+    setUploading(true);
+    try {
+      const imageUrl = await uploadImage(file, 'main');
+      
+      if (isEdit) {
+        setEditForm(prev => ({ ...prev, image: imageUrl }));
+      } else {
+        setNewItem(prev => ({ ...prev, image: imageUrl }));
+      }
+      
+      setSuccess('Main image uploaded successfully!');
+      setTimeout(() => setSuccess(''), 3000);
+    } catch (error) {
+      setError('Failed to upload main image: ' + error.message);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  // Handle hover image upload
+  const handleHoverImageUpload = async (file, isEdit = false) => {
+    if (!file) return;
+
+    setUploading(true);
+    try {
+      const imageUrl = await uploadImage(file, 'hover');
+      
+      if (isEdit) {
+        setEditForm(prev => ({ ...prev, hoverImage: imageUrl }));
+      } else {
+        setNewItem(prev => ({ ...prev, hoverImage: imageUrl }));
+      }
+      
+      setSuccess('Hover image uploaded successfully!');
+      setTimeout(() => setSuccess(''), 3000);
+    } catch (error) {
+      setError('Failed to upload hover image: ' + error.message);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  // Handle description image upload
+  const handleDescriptionImageUpload = async (file, isEdit = false) => {
+    if (!file) return;
+
+    setUploading(true);
+    try {
+      const imageUrl = await uploadImage(file, 'description');
+      
+      if (isEdit) {
+        setEditForm(prev => ({ ...prev, descriptionImage: imageUrl }));
+      } else {
+        setNewItem(prev => ({ ...prev, descriptionImage: imageUrl }));
+      }
+      
+      setSuccess('Description image uploaded successfully!');
+      setTimeout(() => setSuccess(''), 3000);
+    } catch (error) {
+      setError('Failed to upload description image: ' + error.message);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  // Handle additional images upload - FULLY ENABLED
+  const handleAdditionalImagesUpload = async (files, isEdit = false) => {
+    if (!files || files.length === 0) return;
+
+    setUploading(true);
+    try {
+      const uploadPromises = Array.from(files).map(file => uploadImage(file, 'additional'));
+      const imageUrls = await Promise.all(uploadPromises);
+      
+      if (isEdit) {
+        setEditForm(prev => ({ 
+          ...prev, 
+          additionalImages: [...(prev.additionalImages || []), ...imageUrls]
+        }));
+      } else {
+        setNewItem(prev => ({ 
+          ...prev, 
+          additionalImages: [...(prev.additionalImages || []), ...imageUrls]
+        }));
+      }
+      
+      setSuccess(`${imageUrls.length} additional image(s) uploaded successfully!`);
+      setTimeout(() => setSuccess(''), 3000);
+    } catch (error) {
+      console.error('Additional images upload error:', error);
+      setError('Failed to upload additional images: ' + error.message);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  // Remove additional image - FULLY ENABLED
+  const removeAdditionalImage = (index, isEdit = false) => {
+    if (isEdit) {
+      setEditForm(prev => ({
+        ...prev,
+        additionalImages: prev.additionalImages?.filter((_, i) => i !== index) || []
+      }));
+    } else {
+      setNewItem(prev => ({
+        ...prev,
+        additionalImages: prev.additionalImages?.filter((_, i) => i !== index) || []
+      }));
+    }
+  };
 
   // Fetch all items
   const fetchItems = async () => {
@@ -30,7 +174,8 @@ export default function AdminDashboard() {
     
     const { data, error } = await supabase
       .from('items')
-      .select('*');
+      .select('*')
+      .order('created_at', { ascending: false });
     
     console.log('Supabase response:', { data, error });
     
@@ -53,13 +198,26 @@ export default function AdminDashboard() {
 
     const { data, error } = await supabase
       .from('items')
-      .insert([newItem]);
+      .insert([{
+        ...newItem,
+        additionalImages: JSON.stringify(newItem.additionalImages || [])
+      }]);
 
     if (error) {
       setError('Failed to add item: ' + error.message);
       setSuccess('');
     } else {
-      setNewItem({ category: '', name: '', description: '', price: '', image: '', hoverImage: '' });
+      setNewItem({ 
+        category: '', 
+        subcategory: '', 
+        name: '', 
+        description: '', 
+        price: '', 
+        image: '', 
+        hoverImage: '',
+        descriptionImage: '',
+        additionalImages: []
+      });
       setShowAddForm(false);
       setSuccess('Item added successfully!');
       setError('');
@@ -73,7 +231,26 @@ export default function AdminDashboard() {
   // Start editing an item
   const startEdit = (item) => {
     setEditingId(item.id);
-    setEditForm({ ...item });
+    
+    // Properly parse additionalImages
+    let additionalImages = [];
+    if (item.additionalImages) {
+      try {
+        additionalImages = typeof item.additionalImages === 'string' 
+          ? JSON.parse(item.additionalImages) 
+          : Array.isArray(item.additionalImages) 
+            ? item.additionalImages 
+            : [];
+      } catch (error) {
+        console.error('Error parsing additionalImages:', error);
+        additionalImages = [];
+      }
+    }
+    
+    setEditForm({ 
+      ...item,
+      additionalImages: additionalImages
+    });
     setError('');
     setSuccess('');
   };
@@ -89,11 +266,14 @@ export default function AdminDashboard() {
       .from('items')
       .update({
         category: editForm.category,
+        subcategory: editForm.subcategory,
         name: editForm.name,
         description: editForm.description,
         price: editForm.price,
         image: editForm.image,
-        hoverImage: editForm.hoverImage
+        hoverImage: editForm.hoverImage,
+        descriptionImage: editForm.descriptionImage,
+        additionalImages: JSON.stringify(editForm.additionalImages || [])
       })
       .eq('id', editingId);
 
@@ -152,6 +332,68 @@ export default function AdminDashboard() {
     );
   }
 
+  const ImageUploadSection = ({ title, currentImage, onUpload, isEdit = false, accept = "image/*" }) => (
+    <div className="space-y-2">
+      <label className="block text-sm font-medium text-gray-700">{title}</label>
+      <div className="flex items-center space-x-4">
+        <input
+          type="file"
+          accept={accept}
+          onChange={(e) => onUpload(e.target.files[0], isEdit)}
+          className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+        />
+        {uploading && <span className="text-sm text-blue-600">Uploading...</span>}
+      </div>
+      {currentImage && (
+        <div className="mt-2">
+          <img src={currentImage} alt="Preview" className="w-20 h-20 object-cover rounded border" />
+        </div>
+      )}
+    </div>
+  );
+
+  // ADDITIONAL IMAGES SECTION - FULLY ENABLED
+  const AdditionalImagesSection = ({ images, onUpload, onRemove, isEdit = false }) => (
+    <div className="space-y-2">
+      <label className="block text-sm font-medium text-gray-700">
+        Additional Images (Profile Page) 
+        <span className="text-xs text-gray-500 ml-2">({(images || []).length} uploaded)</span>
+      </label>
+      <input
+        type="file"
+        accept="image/*"
+        multiple
+        onChange={(e) => {
+          console.log('Additional images selected:', e.target.files.length);
+          onUpload(e.target.files, isEdit);
+        }}
+        className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
+      />
+      {images && images.length > 0 && (
+        <div className="grid grid-cols-4 gap-2 mt-2">
+          {images.map((img, index) => (
+            <div key={index} className="relative">
+              <img src={img} alt={`Additional ${index + 1}`} className="w-20 h-20 object-cover rounded border" />
+              <button
+                onClick={() => {
+                  console.log('Removing image at index:', index);
+                  onRemove(index, isEdit);
+                }}
+                className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-red-600"
+                type="button"
+              >
+                ×
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+      {(!images || images.length === 0) && (
+        <p className="text-xs text-gray-400 italic">No additional images uploaded yet</p>
+      )}
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-gray-50 p-6">
      <Header/>
@@ -200,62 +442,100 @@ export default function AdminDashboard() {
         {showAddForm && (
           <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
             <h2 className="text-xl font-semibold mb-4">상품 추가하기</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            
+            {/* Basic Info */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
               <input
                 type="text"
-                placeholder="종류"
+                placeholder="카테고리 (예: Kennel Club)"
                 value={newItem.category}
                 onChange={(e) => setNewItem({...newItem, category: e.target.value})}
                 className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <input
                 type="text"
-                placeholder="이름"
+                placeholder="서브카테고리 (예: Dog)"
+                value={newItem.subcategory}
+                onChange={(e) => setNewItem({...newItem, subcategory: e.target.value})}
+                className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <input
+                type="text"
+                placeholder="상품명"
                 value={newItem.name}
                 onChange={(e) => setNewItem({...newItem, name: e.target.value})}
                 className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <input
                 type="text"
-                placeholder="가격 - 단위는 원 (쉼표 없이 숫자만 적어주세요 - 예: 10000)"
+                placeholder="가격 (예: 10000)"
                 value={newItem.price}
                 onChange={(e) => setNewItem({...newItem, price: e.target.value})}
                 className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <input
-                type="url"
-                placeholder="메인 사진 URL"
-                value={newItem.image}
-                onChange={(e) => setNewItem({...newItem, image: e.target.value})}
-                className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <input
-                type="url"
-                placeholder="커서 올렸을때 사진 URL"
-                value={newItem.hoverImage}
-                onChange={(e) => setNewItem({...newItem, hoverImage: e.target.value})}
-                className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
               <textarea
-                placeholder="설명"
+                placeholder="상품 설명"
                 value={newItem.description}
                 onChange={(e) => setNewItem({...newItem, description: e.target.value})}
-                className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 md:col-span-2"
                 rows="3"
               />
             </div>
-            <div className="flex gap-3 mt-4">
+
+            {/* Image Uploads */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+              <ImageUploadSection
+                title="메인 이미지"
+                currentImage={newItem.image}
+                onUpload={handleMainImageUpload}
+              />
+              <ImageUploadSection
+                title="호버 이미지"
+                currentImage={newItem.hoverImage}
+                onUpload={handleHoverImageUpload}
+              />
+              <ImageUploadSection
+                title="상세페이지 이미지"
+                currentImage={newItem.descriptionImage}
+                onUpload={handleDescriptionImageUpload}
+              />
+            </div>
+
+            {/* ADDITIONAL IMAGES SECTION - FULLY ENABLED */}
+            <div className="mb-6">
+              <AdditionalImagesSection
+                images={newItem.additionalImages}
+                onUpload={handleAdditionalImagesUpload}
+                onRemove={removeAdditionalImage}
+              />
+            </div>
+
+            <div className="flex gap-3">
               <button
                 onClick={handleAddItem}
-                className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
+                disabled={uploading}
+                className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50"
               >
-                Add Item
+                {uploading ? '업로드 중...' : '상품 추가'}
               </button>
               <button
-                onClick={() => setShowAddForm(false)}
+                onClick={() => {
+                  setShowAddForm(false);
+                  setNewItem({
+                    category: '',
+                    subcategory: '',
+                    name: '',
+                    description: '',
+                    price: '',
+                    image: '',
+                    hoverImage: '',
+                    descriptionImage: '',
+                    additionalImages: []
+                  });
+                }}
                 className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors"
               >
-                Cancel
+                취소
               </button>
             </div>
           </div>
@@ -265,66 +545,95 @@ export default function AdminDashboard() {
         {editingId ? (
           // Edit Form Modal
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <div className="bg-white rounded-lg p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
               <h2 className="text-xl font-semibold mb-4">상품 수정하기</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              
+              {/* Basic Info */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                 <input
                   type="text"
-                  placeholder="종류"
+                  placeholder="카테고리"
                   value={editForm.category || ''}
                   onChange={(e) => setEditForm({...editForm, category: e.target.value})}
                   className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <input
                   type="text"
-                  placeholder="이름"
+                  placeholder="서브카테고리 (선택사항)"
+                  value={editForm.subcategory || ''}
+                  onChange={(e) => setEditForm({...editForm, subcategory: e.target.value})}
+                  className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <input
+                  type="text"
+                  placeholder="상품명"
                   value={editForm.name || ''}
                   onChange={(e) => setEditForm({...editForm, name: e.target.value})}
                   className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <input
                   type="text"
-                  placeholder="가격 - 단위는 원 (쉼표 없이 숫자만 적어주세요 - 예: 10000)"
+                  placeholder="가격"
                   value={editForm.price || ''}
                   onChange={(e) => setEditForm({...editForm, price: e.target.value})}
                   className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
-                <input
-                  type="url"
-                  placeholder="메인 사진 URL"
-                  value={editForm.image || ''}
-                  onChange={(e) => setEditForm({...editForm, image: e.target.value})}
-                  className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <input
-                  type="url"
-                  placeholder="커서 올렸을때 사진 URL"
-                  value={editForm.hoverImage || ''}
-                  onChange={(e) => setEditForm({...editForm, hoverImage: e.target.value})}
-                  className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
                 <textarea
-                  placeholder="설명"
+                  placeholder="상품 설명"
                   value={editForm.description || ''}
                   onChange={(e) => setEditForm({...editForm, description: e.target.value})}
-                  className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 md:col-span-2"
                   rows="3"
                 />
               </div>
-              <div className="flex gap-3 mt-6">
+
+              {/* Image Uploads */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                <ImageUploadSection
+                  title="메인 이미지"
+                  currentImage={editForm.image}
+                  onUpload={handleMainImageUpload}
+                  isEdit={true}
+                />
+                <ImageUploadSection
+                  title="호버 이미지"
+                  currentImage={editForm.hoverImage}
+                  onUpload={handleHoverImageUpload}
+                  isEdit={true}
+                />
+                <ImageUploadSection
+                  title="상세페이지 이미지"
+                  currentImage={editForm.descriptionImage}
+                  onUpload={handleDescriptionImageUpload}
+                  isEdit={true}
+                />
+              </div>
+
+              {/* ADDITIONAL IMAGES SECTION - FULLY ENABLED */}
+              <div className="mb-6">
+                <AdditionalImagesSection
+                  images={editForm.additionalImages}
+                  onUpload={handleAdditionalImagesUpload}
+                  onRemove={removeAdditionalImage}
+                  isEdit={true}
+                />
+              </div>
+
+              <div className="flex gap-3">
                 <button
                   onClick={saveEdit}
-                  className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2"
+                  disabled={uploading}
+                  className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2 disabled:opacity-50"
                 >
                   <Save size={16} />
-                  Save Changes
+                  {uploading ? '업로드 중...' : '변경사항 저장'}
                 </button>
                 <button
                   onClick={cancelEdit}
                   className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors flex items-center gap-2"
                 >
                   <X size={16} />
-                  Cancel
+                  취소
                 </button>
               </div>
             </div>
@@ -335,10 +644,25 @@ export default function AdminDashboard() {
             {items.map((item) => {
               const hoverImage = item.hoverImage || item.image?.replace('front', 'main') || item.image;
               
+              // Properly parse additionalImages
+              let additionalImages = [];
+              if (item.additionalImages) {
+                try {
+                  additionalImages = typeof item.additionalImages === 'string' 
+                    ? JSON.parse(item.additionalImages) 
+                    : Array.isArray(item.additionalImages) 
+                      ? item.additionalImages 
+                      : [];
+                } catch (error) {
+                  console.error('Error parsing additionalImages for item', item.id, ':', error);
+                  additionalImages = [];
+                }
+              }
+              
               return (
                 <div 
                   key={item.id} 
-                  className="bg-white border-white max-w-[20em] mx-auto group cursor-pointer transition-transform duration-300 hover:scale-105"
+                  className="bg-white border-white w-[20em] mx-auto group cursor-pointer transition-transform duration-300 hover:scale-105 relative"
                 >
                   {/* Admin Controls */}
                   <div className="absolute top-2 right-2 z-10 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -355,6 +679,20 @@ export default function AdminDashboard() {
                       <Trash2 size={14} />
                     </button>
                   </div>
+
+                  {/* Additional Images Indicator - FULLY ENABLED */}
+                  {additionalImages.length > 0 && (
+                    <div className="absolute top-2 left-2 z-10 bg-green-600 text-white px-2 py-1 rounded-full text-xs">
+                      +{additionalImages.length} images
+                    </div>
+                  )}
+
+                  {/* Description Image Indicator */}
+                  {item.descriptionImage && (
+                    <div className="absolute bottom-2 left-2 z-10 bg-purple-600 text-white px-2 py-1 rounded-full text-xs">
+                      상세이미지
+                    </div>
+                  )}
 
                   {/* Image Section */}
                   <div className="relative overflow-hidden aspect-square">
@@ -384,6 +722,9 @@ export default function AdminDashboard() {
                   <div className="p-4">
                     <div className="text-xs text-gray-500 uppercase tracking-wider mb-1">
                       {item.category}
+                      {item.subcategory && (
+                        <span className="ml-1 text-blue-600"> • {item.subcategory}</span>
+                      )}
                     </div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">
                       {item.name}
@@ -392,7 +733,7 @@ export default function AdminDashboard() {
                       {item.description}
                     </p>
                     <p className="text-lg font-medium text-gray-900">
-                      {item.price}
+                      ₩{item.price}
                     </p>
                   </div>
                 </div>
@@ -403,8 +744,8 @@ export default function AdminDashboard() {
         
         {items.length === 0 && !loading && (
           <div className="text-center py-12 text-gray-500 bg-white rounded-lg">
-            <p className="text-xl mb-4">No items found</p>
-            <p>Add your first item using the button above.</p>
+            <p className="text-xl mb-4">상품이 없습니다</p>
+            <p>위의 버튼을 사용해서 첫 번째 상품을 추가해보세요.</p>
           </div>
         )}
       </div>

@@ -1,13 +1,62 @@
 import { useState, useEffect } from 'react';
+import { supabase } from '@/lib/supabase';
 
 export default function SandwichMenu() {
   const [isOpen, setIsOpen] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
+  // Fetch unique categories from Supabase
+  const fetchCategories = async () => {
+    try {
+      setLoading(true);
+      
+      const { data, error } = await supabase
+        .from('items')
+        .select('category')
+        .not('category', 'is', null) // Exclude null categories
+        .neq('category', ''); // Exclude empty categories
 
+      if (error) {
+        console.error('Error fetching categories:', error);
+        return;
+      }
+
+      // Get unique categories and remove duplicates (case-insensitive)
+      const uniqueCategories = [...new Set(
+        data
+          .map(item => item.category?.trim()) // Remove whitespace
+          .filter(Boolean) // Remove falsy values
+          .map(category => category.toLowerCase()) // Convert to lowercase for comparison
+      )];
+
+      // Convert back to original case for display, using the first occurrence
+      const displayCategories = uniqueCategories.map(lowerCategory => {
+        const originalCase = data.find(item => 
+          item.category?.toLowerCase().trim() === lowerCategory
+        )?.category?.trim();
+        
+        return {
+          display: originalCase || lowerCategory,
+          slug: lowerCategory
+        };
+      });
+
+      setCategories(displayCategories);
+    } catch (err) {
+      console.error('Error fetching categories:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
   return (
     <>
@@ -37,7 +86,7 @@ export default function SandwichMenu() {
       {/* Full Viewport Dark Overlay */}
       {isOpen && (
         <div 
-          className="fixed inset-0 w-screen h-screen z-[9998]"
+          className="fixed inset-0 w-screen h-screen bg-black bg-opacity-60 z-[9998]"
           style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
           onClick={toggleMenu}
         ></div>
@@ -50,7 +99,8 @@ export default function SandwichMenu() {
         }`}
         style={{ position: 'fixed' }}
       >
-        <div className="flex flex-col justify-center items-center h-full space-y-12">
+        <div className="flex flex-col justify-center items-center h-full space-y-8 px-6">
+          {/* Home Link */}
           <a
             href="/"
             className="text-3xl font-medium text-gray-800 hover:text-rose-400 transition-colors duration-200"
@@ -58,20 +108,33 @@ export default function SandwichMenu() {
           >
             홈
           </a>
-          <a
-            href="/shelf"
-            className="text-3xl font-medium text-gray-800 hover:text-rose-400 transition-colors duration-200"
-            onClick={toggleMenu}
-          >
-            Shelf
-          </a>
-          <a
-            href="/Door"
-            className="text-3xl font-medium text-gray-800 hover:text-rose-400 transition-colors duration-200"
-            onClick={toggleMenu}
-          >
-            Door
-          </a>
+
+          {/* Loading State */}
+          {loading && (
+            <div className="text-lg text-gray-500">
+              카테고리 로딩중...
+            </div>
+          )}
+
+          {/* Dynamic Category Links */}
+          {!loading && categories.length > 0 && categories.map((category) => (
+            <a
+              key={category.slug}
+              href={`/category/${category.slug}`}
+              className="text-3xl font-medium text-gray-800 hover:text-rose-400 transition-colors duration-200 text-center"
+              onClick={toggleMenu}
+            >
+              {category.display}
+            </a>
+          ))}
+
+          {/* No Categories Found */}
+          {!loading && categories.length === 0 && (
+            <div className="text-lg text-gray-500 text-center">
+              카테고리가 없습니다
+            </div>
+          )}
+
         </div>
       </div>
     </>

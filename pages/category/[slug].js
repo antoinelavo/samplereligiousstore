@@ -1,0 +1,249 @@
+import React, { useState, useMemo } from 'react';
+import ScrollHeader from '@/components/Header'
+import Items from '@/components/Items'
+import Footer from '@/components/Footer'
+import { supabase } from '@/lib/supabase'
+
+const CategoryPage = ({ items, category, error }) => {
+  const [activeSubcategory, setActiveSubcategory] = useState('all');
+
+  // Extract unique subcategories from items
+  const subcategories = useMemo(() => {
+    if (!items || items.length === 0) return [];
+    
+    const uniqueSubcategories = [...new Set(
+      items
+        .map(item => item.subcategory)
+        .filter(subcategory => subcategory && subcategory.trim() !== '')
+    )];
+    
+    return uniqueSubcategories.sort();
+  }, [items]);
+
+  // Filter items based on active subcategory
+  const filteredItems = useMemo(() => {
+    if (!items) return [];
+    if (activeSubcategory === 'all') return items;
+    
+    return items.filter(item => item.subcategory === activeSubcategory);
+  }, [items, activeSubcategory]);
+
+  // Handle error case
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-white text-center">
+          <h1 className="text-2xl mb-4">Error Loading Category</h1>
+          <p className="text-gray-400">{error}</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Handle empty category case
+  if (!items || items.length === 0) {
+    return (
+      <div className="min-h-screen">
+        <ScrollHeader/>
+        
+        {/* Hero Section */}
+        <section className="relative min-h-screen flex items-center justify-center">
+          <div className="absolute inset-0">
+            <img
+              src="/images/background1.jpeg"
+              alt="Background"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="relative z-10 text-center text-white">
+            <h1 className="text-4xl font-bold mb-4 capitalize">{category}</h1>
+            <p className="text-xl text-gray-300">No items found in this category</p>
+          </div>
+        </section>
+
+        <Footer 
+          companyName="Out of Place Object"
+          founder="김종원, 조현흠"
+          phone="02-0000-0000"
+          businessNumber="000-0000-0000"
+          address="성남시 분당구"
+          email="contact@opo.kr"
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen">
+      <ScrollHeader/>
+
+      {/* Hero Section */}
+      {/* <section className="relative min-h-screen flex items-center justify-center">
+        <div className="absolute inset-0">
+          <img
+            src="/images/background1.jpeg"
+            alt="Background"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        
+        <div className="relative z-10 text-center text-white">
+          <h1 className="text-5xl font-bold capitalize tracking-wide drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
+            {category}
+          </h1>
+        </div>
+      </section> */}
+
+      {/* Hero Section 2 */}
+    <section className="relative flex items-center justify-center bg-white">        
+        <div className="relative z-10 text-center text-black bg-white pt-[3em] pb-[1em]">
+          <h1 className="text-3xl font-bold capitalize tracking-wide]">
+            {category}
+          </h1>
+        </div>
+      </section>
+
+      {/* Subcategory Filter Buttons */}
+      {subcategories.length > 0 && (
+        <section>
+          <div className="bg-white mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="bg-white max-w-7xl flex flex-wrap justify-center gap-4 mx-auto">
+              {/* Show All button */}
+              <button
+                onClick={() => setActiveSubcategory('all')}
+                className={`px-6 text-sm font-medium transition-colors duration-200 ${
+                  activeSubcategory === 'all'
+                    ? 'text-black'
+                    : 'text-gray-400 hover:text-black'
+                }`}
+              >
+                All Items
+              </button>
+              
+              {/* Subcategory buttons */}
+              {subcategories.map((subcategory) => (
+                <button
+                  key={subcategory}
+                  onClick={() => setActiveSubcategory(subcategory)}
+                  className={`px-6 py-2 text-sm font-medium transition-colors duration-200 ${
+                    activeSubcategory === subcategory
+                      ? 'text-black'
+                      : 'text-gray-400 hover:text-black'
+                  }`}
+                >
+                  {subcategory}
+                </button>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Items Section */}
+      <Items 
+        items={filteredItems}
+        sectionId={`${category}-items`}
+      />
+
+      {/* Footer */}
+      <Footer 
+        companyName="Out of Place Object"
+        founder="김종원, 조현흠"
+        phone="02-0000-0000"
+        businessNumber="000-0000-0000"
+        address="성남시 분당구"
+        email="contact@opo.kr"
+      />
+    </div>
+  );
+};
+
+// This function runs on each request (server-side)
+export async function getServerSideProps({ params }) {
+  const { slug } = params;
+  
+  console.log('Slug from URL:', slug); // Debug log
+  
+  try {
+    // First, let's fetch ALL items to see what's in the database
+    const { data: allData, error: allError } = await supabase
+      .from('items')
+      .select('*');
+    
+    console.log('All items in database:', allData); // Debug log
+    
+    if (allData) {
+      console.log('Available categories:', [...new Set(allData.map(item => item.category))]); // Debug log
+    }
+
+    // Now fetch items for this specific category with multiple matching strategies
+    const { data, error } = await supabase
+      .from('items')
+      .select('*')
+      .or(`category.ilike.${slug},category.ilike.${slug.toLowerCase()},category.ilike.${slug.toUpperCase()},category.ilike.${slug.charAt(0).toUpperCase() + slug.slice(1)}`)
+      .order('name');
+
+    console.log('Filtered data for slug:', slug, data); // Debug log
+
+    if (error) {
+      console.error('Supabase error:', error);
+      return {
+        props: {
+          items: [],
+          category: slug,
+          error: `Failed to load ${slug} items: ${error.message}`
+        }
+      };
+    }
+
+    // If no items found with the above query, try a simpler approach
+    let finalData = data;
+    if (!data || data.length === 0) {
+      console.log('No items found with complex query, trying simple match...');
+      const { data: simpleData, error: simpleError } = await supabase
+        .from('items')
+        .select('*')
+        .eq('category', slug);
+      
+      console.log('Simple query result:', simpleData);
+      finalData = simpleData;
+    }
+
+    // Transform data to match your Items component expected format
+    const transformedItems = finalData?.map(item => {
+      console.log('Processing item:', item); // Debug each item
+      return {
+        name: item.name || 'Unnamed Item',
+        image: item.image || `/images/${slug}/default.jpeg`,
+        hoverImage: item.hoverImage || (item.image ? item.image.replace('front', 'main') : null),
+        description: item.description || 'No description available',
+        price: item.price || 'Price not available',
+        category: item.category || slug,
+        subcategory: item.subcategory || null // Make sure to include subcategory
+      };
+    }) || [];
+
+    console.log('Transformed items:', transformedItems); // Debug transformed data
+
+    // Don't filter out items - let's see everything first
+    return {
+      props: {
+        items: transformedItems,
+        category: slug,
+        error: null
+      }
+    };
+
+  } catch (err) {
+    console.error('Error fetching category data:', err);
+    return {
+      props: {
+        items: [],
+        category: slug,
+        error: `Failed to load ${slug} items. Please try again later.`
+      }
+    };
+  }
+}
+
+export default CategoryPage;

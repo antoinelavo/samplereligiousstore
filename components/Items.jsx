@@ -42,7 +42,7 @@ export default function Items({
             return (
               <div 
                 key={index} 
-                className={`${itemBackgroundColor} border ${borderColor} max-w-[20em] mx-auto group cursor-pointer transition-transform duration-300 hover:scale-105`}
+                className={`${itemBackgroundColor} border ${borderColor} min-w-[20em] mx-auto group cursor-pointer transition-transform duration-300 hover:scale-105`}
               >
             <a href={`/item/${item.name.toLowerCase()}`}>
                 <div className="relative overflow-hidden">
@@ -51,7 +51,6 @@ export default function Items({
                     src={item.image} 
                     alt={item.name || item.title}
                     className={`${imageClassName} transition-opacity duration-300 group-hover:opacity-0`}
-                    href="https://www.google.com"
                   />
                   {/* Hover image */}
                   <img 
@@ -69,7 +68,7 @@ export default function Items({
                     {item.description}
                   </p>
                   <p>
-                    {item.price}
+                    ₩ {item.price}
                   </p>
                 </div>
               </div>
