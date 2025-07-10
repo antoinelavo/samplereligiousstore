@@ -68,7 +68,7 @@ export default function Items({
                     {item.description}
                   </p>
                   <p>
-                    ₩ {item.price}
+                     ₩ {item.price}
                   </p>
                 </div>
               </div>

@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import ScrollHeader from '@/components/Header'
 import Items from '@/components/Items'
+import HeroSection from '@/components/HeroSection';
 import Footer from '@/components/Footer'
 import { supabase } from '@/lib/supabase'
 
@@ -28,6 +29,16 @@ const CategoryPage = ({ items, category, error }) => {
     return items.filter(item => item.subcategory === activeSubcategory);
   }, [items, activeSubcategory]);
 
+  // Generate dynamic page name for hero image
+  const heroPageName = useMemo(() => {
+    if (activeSubcategory === 'all') {
+      return category; // Use category name for "all" view
+    } else {
+      // Use format: "category-subcategory" (e.g., "kennel-club-dog", "clothing-shirts")
+      return `${category}-${activeSubcategory.toLowerCase().replace(/\s+/g, '-')}`;
+    }
+  }, [category, activeSubcategory]);
+
   // Handle error case
   if (error) {
     return (
@@ -47,19 +58,12 @@ const CategoryPage = ({ items, category, error }) => {
         <ScrollHeader/>
         
         {/* Hero Section */}
-        <section className="relative min-h-screen flex items-center justify-center">
-          <div className="absolute inset-0">
-            <img
-              src="/images/background1.jpeg"
-              alt="Background"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div className="relative z-10 text-center text-white">
-            <h1 className="text-4xl font-bold mb-4 capitalize">{category}</h1>
-            <p className="text-xl text-gray-300">No items found in this category</p>
-          </div>
-        </section>
+        <HeroSection 
+          pageName={category}
+          title={category}
+          fallbackImage="/images/background1.jpeg"
+          showOverlay={true}
+        />
 
         <Footer 
           companyName="Out of Place Object"
@@ -77,28 +81,17 @@ const CategoryPage = ({ items, category, error }) => {
     <div className="min-h-screen">
       <ScrollHeader/>
 
-      {/* Hero Section */}
-      {/* <section className="relative min-h-screen flex items-center justify-center">
-        <div className="absolute inset-0">
-          <img
-            src="/images/background1.jpeg"
-            alt="Background"
-            className="w-full h-full object-cover"
-          />
-        </div>
-        
-        <div className="relative z-10 text-center text-white">
-          <h1 className="text-5xl font-bold capitalize tracking-wide drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
-            {category}
-          </h1>
-        </div>
-      </section> */}
+      {/* Dynamic Hero Section - Changes based on selected subcategory */}
+      <HeroSection 
+        pageName={heroPageName}
+        fallbackImage="/images/background1.jpeg"
+      />
 
-      {/* Hero Section 2 */}
-    <section className="relative flex items-center justify-center bg-white">        
+      {/* Hero Section Text */}
+      <section className="relative flex items-center justify-center bg-white">        
         <div className="relative z-10 text-center text-black bg-white pt-[3em] pb-[1em]">
-          <h1 className="text-3xl font-bold capitalize tracking-wide]">
-            {category}
+          <h1 className="text-3xl font-bold capitalize tracking-wide">
+            {activeSubcategory === 'all' ? category : `${category}`}
           </h1>
         </div>
       </section>
