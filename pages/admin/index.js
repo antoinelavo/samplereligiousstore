@@ -379,7 +379,7 @@ export default function AdminDashboard() {
                   console.log('Removing image at index:', index);
                   onRemove(index, isEdit);
                 }}
-                className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-red-600"
+                className="absolute -top-3 left-18 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-red-600"
                 type="button"
               >
                 ×
