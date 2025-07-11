@@ -1,10 +1,98 @@
 import React, { useState, useEffect } from 'react';
-import { Pencil, Trash2, Plus, Save, X, Upload, Image as ImageIcon } from 'lucide-react';
+import { Pencil, Trash2, Plus, Save, X, Upload, Image as ImageIcon, Lock } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import Header from '@/components/Header'
 import HeroSectionsAdmin from '@/components/HeroSectionsAdmin'
 
+// Simple password protection component
+const PasswordProtection = ({ onAuthenticate }) => {
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  // You can set this password in your environment variables
+  const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'admin123';
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    // Simple delay to prevent brute force attempts
+    setTimeout(() => {
+      if (password === ADMIN_PASSWORD) {
+        // Store authentication with expiration (24 hours)
+        const expirationTime = Date.now() + (24 * 60 * 60 * 1000);
+        localStorage.setItem('admin_auth', JSON.stringify({
+          authenticated: true,
+          expires: expirationTime
+        }));
+        onAuthenticate(true);
+      } else {
+        setError('잘못된 비밀번호입니다.');
+        setPassword('');
+      }
+      setLoading(false);
+    }, 1000);
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
+      <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md mb-[60svh]">
+        <div className="text-center mb-8">
+          <div className="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+            <Lock size={32} className="text-blue-600" />
+          </div>
+          <h1 className="text-2xl font-bold text-gray-900">관리자 인증</h1>
+          <p className="text-gray-600 mt-2">관리자 대시보드에 접근하려면 비밀번호를 입력하세요</p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+              비밀번호
+            </label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="비밀번호를 입력하세요"
+              required
+              disabled={loading}
+            />
+          </div>
+
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-700 px-3 py-2 rounded text-sm">
+              {error}
+            </div>
+          )}
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {loading ? '확인 중...' : '로그인'}
+          </button>
+        </form>
+
+        <div className="mt-6 text-xs text-gray-500 text-center">
+          보안을 위해 24시간 후 자동으로 로그아웃됩니다.
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default function AdminDashboard() {
+  // New authentication state
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [authLoading, setAuthLoading] = useState(true);
+
+  // Existing state variables
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editingId, setEditingId] = useState(null);
@@ -29,6 +117,38 @@ export default function AdminDashboard() {
   // Logo management state
   const [logoImage, setLogoImage] = useState('');
   const [logoLoading, setLogoLoading] = useState(false);
+
+  // Check authentication status on mount
+  useEffect(() => {
+    const checkAuth = () => {
+      try {
+        const authData = localStorage.getItem('admin_auth');
+        if (authData) {
+          const { authenticated, expires } = JSON.parse(authData);
+          if (authenticated && Date.now() < expires) {
+            setIsAuthenticated(true);
+          } else {
+            // Expired, remove from storage
+            localStorage.removeItem('admin_auth');
+            setIsAuthenticated(false);
+          }
+        }
+      } catch (error) {
+        console.error('Auth check error:', error);
+        localStorage.removeItem('admin_auth');
+        setIsAuthenticated(false);
+      }
+      setAuthLoading(false);
+    };
+
+    checkAuth();
+  }, []);
+
+  // Logout function
+  const handleLogout = () => {
+    localStorage.removeItem('admin_auth');
+    setIsAuthenticated(false);
+  };
 
   // Image upload function
   const uploadImage = async (file, folder = 'products') => {
@@ -391,12 +511,28 @@ export default function AdminDashboard() {
   };
 
   useEffect(() => {
-    if (activeTab === 'products') {
-      fetchItems();
-    } else if (activeTab === 'logo') {
-      fetchLogo();
+    if (isAuthenticated) {
+      if (activeTab === 'products') {
+        fetchItems();
+      } else if (activeTab === 'logo') {
+        fetchLogo();
+      }
     }
-  }, [activeTab]);
+  }, [activeTab, isAuthenticated]);
+
+  // Show loading while checking authentication
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-xl text-gray-500">Loading...</div>
+      </div>
+    );
+  }
+
+  // Show password protection if not authenticated
+  if (!isAuthenticated) {
+    return <PasswordProtection onAuthenticate={setIsAuthenticated} />;
+  }
 
   const ImageUploadSection = ({ title, currentImage, onUpload, isEdit = false, accept = "image/*" }) => (
     <div className="space-y-2">
@@ -469,6 +605,12 @@ export default function AdminDashboard() {
         <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
           <div className="flex justify-between items-center mb-4">
             <h1 className="text-3xl font-bold text-gray-900">관리자 대시보드</h1>
+            <button
+              onClick={handleLogout}
+              className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors text-sm"
+            >
+              로그아웃
+            </button>
           </div>
           
           {/* Tab Navigation */}
