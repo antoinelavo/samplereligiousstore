@@ -4,6 +4,8 @@ import Link from 'next/link';
 import ScrollHeader from '@/components/Header'
 import Footer from '@/components/Footer'
 import { supabase } from '@/lib/supabase'
+import PaymentButton from '@/components/PaymentButton';
+
 
 export default function ItemPage({ item }) {
   const [selectedImage, setSelectedImage] = useState(0);
@@ -105,12 +107,7 @@ export default function ItemPage({ item }) {
         </div>
 
         <div className="flex justify-center mt-8">
-          <a 
-            href="https://smartstore.naver.com/out_of_place" 
-            className="border border-gray-400 p-[1em] text-2xl hover:bg-gray-100 transition-colors"
-          >
-            Buy now
-          </a>
+          <PaymentButton item={item} />
         </div>
 
         {/* Description Image */}
