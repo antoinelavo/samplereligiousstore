@@ -6,7 +6,7 @@ import HeroSection from '@/components/HeroSection'
 import Footer from '@/components/Footer'
 import { supabase } from '@/lib/supabase'
 
-const BarberShopHomepage = () => {
+const Homepage = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -152,15 +152,9 @@ const BarberShopHomepage = () => {
 
       {/* Footer */}
       <Footer 
-        companyName="Out of Place Object"
-        founder="김종원, 조현흠"
-        phone="02-0000-0000"
-        businessNumber="000-0000-0000"
-        address="성남시 분당구"
-        email="contact@opo.kr"
       />
     </div>
   );
 };
 
-export default BarberShopHomepage;
+export default Homepage;

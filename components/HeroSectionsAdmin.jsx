@@ -248,52 +248,12 @@ const HeroSectionsAdmin = () => {
         <div className="border rounded-lg p-4 mb-6 bg-gray-50">
           <h3 className="text-lg font-semibold mb-4">새 히어로 섹션 추가</h3>
                       {/* Quick Add Presets */}
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">빠른 추가 (일반적인 페이지)</label>
-              <div className="flex flex-wrap gap-2">
-                <button
-                  onClick={() => setNewSection({...newSection, page_name: 'home'})}
-                  className="px-3 py-1 text-xs bg-green-100 text-green-700 rounded hover:bg-green-200 transition-colors"
-                >
-                  홈페이지
-                </button>
-                <button
-                  onClick={() => setNewSection({...newSection, page_name: 'kennel-club'})}
-                  className="px-3 py-1 text-xs bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-colors"
-                >
-                  Kennel Club
-                </button>
-                <button
-                  onClick={() => setNewSection({...newSection, page_name: 'kennel-club-dog'})}
-                  className="px-3 py-1 text-xs bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors"
-                >
-                  Kennel Club - Dog
-                </button>
-                <button
-                  onClick={() => setNewSection({...newSection, page_name: 'kennel-club-cat'})}
-                  className="px-3 py-1 text-xs bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors"
-                >
-                  Kennel Club - Cat
-                </button>
-                <button
-                  onClick={() => setNewSection({...newSection, page_name: 'clothing'})}
-                  className="px-3 py-1 text-xs bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-colors"
-                >
-                  Clothing
-                </button>
-                <button
-                  onClick={() => setNewSection({...newSection, page_name: 'clothing-shirts'})}
-                  className="px-3 py-1 text-xs bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors"
-                >
-                  Clothing - Shirts
-                </button>
-              </div>
-            </div>
+
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <input
               type="text"
-              placeholder="페이지 이름 (예: home, kennel-club, clothing)"
+              placeholder="페이지 이름"
               value={newSection.page_name}
               onChange={(e) => setNewSection({...newSection, page_name: e.target.value})}
               className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"

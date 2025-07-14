@@ -1,10 +1,10 @@
 export default function Footer({
-  companyName = "Style House",
+  companyName = "종교 관련 제품",
   founder = "김민수",
   phone = "02-1234-5678",
   businessNumber = "123-45-67890",
-  address = "서울시 강남구 테헤란로 123, 2층",
-  email = "info@stylehouse.com",
+  address = "성남시 분당구",
+  email = "info@religioushouse.com",
   className = ""
 }) {
   return (
@@ -32,13 +32,6 @@ export default function Footer({
               <p>주소: {address}</p>
             </div>
           </div>
-        </div>
-
-        {/* Bottom Section */}
-        <div className="mt-8 pt-8 border-t border-gray-100 text-center">
-          <p className="text-xs text-gray-600">
-            본 사이트의 모든 콘텐츠는 저작권법의 보호를 받습니다.
-          </p>
         </div>
       </div>
     </footer>

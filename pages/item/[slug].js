@@ -122,14 +122,7 @@ export default function ItemPage({ item }) {
         )}
       </main>
     </div>
-      <Footer 
-        companyName="Out of Place Object"
-        founder="김종원, 조현흠"
-        phone="02-0000-0000"
-        businessNumber="000-0000-0000"
-        address="성남시 분당구"
-        email="contact@opo.kr"
-      />
+      <Footer/>
     </>
   );
 }

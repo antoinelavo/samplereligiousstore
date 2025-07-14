@@ -697,14 +697,14 @@ export default function AdminDashboard() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                   <input
                     type="text"
-                    placeholder="카테고리 (예: Kennel Club)"
+                    placeholder="카테고리"
                     value={newItem.category}
                     onChange={(e) => setNewItem({...newItem, category: e.target.value})}
                     className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   <input
                     type="text"
-                    placeholder="서브카테고리 (예: Dog)"
+                    placeholder="서브카테고리"
                     value={newItem.subcategory}
                     onChange={(e) => setNewItem({...newItem, subcategory: e.target.value})}
                     className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
