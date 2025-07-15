@@ -5,6 +5,7 @@ import ScrollHeader from '@/components/Header'
 import Footer from '@/components/Footer'
 import { supabase } from '@/lib/supabase'
 import PaymentButton from '@/components/PaymentButton';
+import ExpandableProductInfo from '@/components/ExpandableProductInfo';
 
 
 export default function ItemPage({ item }) {
@@ -126,7 +127,8 @@ export default function ItemPage({ item }) {
           </div>
         )}
         <div>
-          
+        
+        <ExpandableProductInfo/>
         </div>
       </main>
     </div>

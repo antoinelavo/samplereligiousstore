@@ -115,7 +115,7 @@ export default function PaymentButton({ item, className = "" }) {
       <button 
         onClick={requestPayment}
         disabled={isLoading}
-        className={`border border-gray-400 px-[1em] py-[0.5em] text-md hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${className}`}
+        className={`border border-gray-200 rounded-md px-[1em] py-[0.5em] text-md hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${className}`}
       >
         {isLoading ? '로딩 중...' : '구매하기'}
       </button>
