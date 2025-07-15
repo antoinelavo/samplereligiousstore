@@ -1,10 +1,9 @@
 export default function Footer({
-  companyName = "종교 관련 제품",
-  founder = "김민수",
+  companyName = "8월에 눈 내리다 (키아라)",
+  founder = "윤현조",
   phone = "02-1234-5678",
-  businessNumber = "123-45-67890",
-  address = "성남시 분당구",
-  email = "info@religioushouse.com",
+  businessNumber = "129-35-84676",
+  address = "성남시 분당구 미금로 114, 상가동 1층 109호 (구미동, 하얀마을그랜드빌)",
   className = ""
 }) {
   return (
@@ -28,7 +27,7 @@ export default function Footer({
             <h3 className="text-lg font-semibold text-black mb-4">연락처</h3>
             <div className="space-y-2 text-sm text-gray-800">
               <p>전화: {phone}</p>
-              <p>이메일: {email}</p>
+              {/* <p>이메일: {email}</p> */}
               <p>주소: {address}</p>
             </div>
           </div>

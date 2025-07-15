@@ -3,8 +3,10 @@ import Link from 'next/link';
 import ScrollHeader from '@/components/Header'
 import Items from '@/components/Items'
 import HeroSection from '@/components/HeroSection'
+import HeroCarousel from '@/components/HeroCarousel';
 import Footer from '@/components/Footer'
 import { supabase } from '@/lib/supabase'
+import HeritageSections from '@/components/HeritageSections';
 
 const Homepage = () => {
   const [items, setItems] = useState([]);
@@ -73,14 +75,12 @@ const Homepage = () => {
   return (
     <div className="min-h-screen bg-white">
       <ScrollHeader/>
+      <HeroCarousel/>
+      <HeritageSections/>
 
-      <HeroSection 
-        pageName="home"
-        fallbackImage="/images/border.png"
-      />
 
       {/* Category Navigation Section */}
-      {!loading && !error && categories.length > 0 && (
+      {/* {!loading && !error && categories.length > 0 && (
         <section className="bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
@@ -110,7 +110,7 @@ const Homepage = () => {
             </div>
           </div>
         </section>
-      )}
+      )} */}
 
       {/* Items Section */}
       {loading ? (
