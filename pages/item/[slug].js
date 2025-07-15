@@ -35,14 +35,11 @@ export default function ItemPage({ item }) {
             <h1 className="text-4xl md:text-6xl font-bold text-black mb-4">
               {item.name}
             </h1>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              {item.description}
-            </p>
           </div>
 
           {/* Main image display */}
           <div className="mb-8">
-            <div className="relative aspect-[1.5/1] max-w-3xl mx-auto bg-gray-100 overflow-hidden">
+            <div className="relative aspect-[1/1] max-w-3xl mx-auto bg-gray-100 overflow-hidden rounded-lg">
               <img
                 src={item.images[selectedImage]}
                 alt={`${item.name} - Image ${selectedImage + 1}`}
@@ -59,7 +56,7 @@ export default function ItemPage({ item }) {
                 <button
                   key={index}
                   onClick={() => setSelectedImage(index)}
-                  className={`relative w-20 aspect-[1.5/1] overflow-hidden border-2 transition-all duration-200 ${
+                  className={`relative w-20 aspect-[1/1] overflow-hidden border-2 transition-all duration-200 rounded-lg ${
                     selectedImage === index 
                       ? 'border-black scale-105' 
                       : 'border-gray-200 hover:border-gray-400'
@@ -100,8 +97,12 @@ export default function ItemPage({ item }) {
           {/* Price section */}
           <div className="flex justify-center mt-[3em]">
             <div className="mx-auto text-center">
-              <h3 className="text-lg font-semibold mb-2">Price</h3>
+              <h3 className="text-lg font-semibold mb-2">가격</h3>
               <p className="text-gray-600">₩{item.price || 'Out of Stock'}</p>
+
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto mt-[3em]">
+                {item.description}
+              </p>
             </div>
           </div>
         </div>
@@ -116,7 +117,7 @@ export default function ItemPage({ item }) {
             <img
               src={item.descriptionImage}
               alt={`${item.name} - Product Details`}
-              className="w-full h-auto object-contain"
+              className="w-full h-auto object-contain rounded-lg"
             />
           </div>
         )}
