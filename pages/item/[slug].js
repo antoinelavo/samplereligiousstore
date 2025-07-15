@@ -30,16 +30,9 @@ export default function ItemPage({ item }) {
       {/* Main content */}
       <main className="px-6 pb-12 pt-[3em]">
         <div className="max-w-6xl mx-auto">
-          {/* Item title */}
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-6xl font-bold text-black mb-4">
-              {item.name}
-            </h1>
-          </div>
-
           {/* Main image display */}
           <div className="mb-8">
-            <div className="relative aspect-[1/1] max-w-3xl mx-auto bg-gray-100 overflow-hidden rounded-lg">
+            <div className="relative aspect-[1/1] max-w-xl mx-auto bg-gray-100 overflow-hidden rounded-lg shadow-lg">
               <img
                 src={item.images[selectedImage]}
                 alt={`${item.name} - Image ${selectedImage + 1}`}
@@ -71,7 +64,29 @@ export default function ItemPage({ item }) {
               ))}
             </div>
           )}
+          {/* Item title */}
+          <div className="text-left md:text-center">
+            <h1 className="text-lg md:text-2xl font-bold text-black mb-4">
+              {item.name}
+            </h1>
 
+            {/* Price section */}
+            <div className="text-left md:text-center">
+              <p className="text-gray-600"><span>
+                                            ₩{ 
+                                              item.price != null 
+                                                ? item.price.toLocaleString('ko-KR') 
+                                                : 'Out of Stock' 
+                                            }
+                                          </span>
+                </p>
+
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto mt-[3em]">
+                {item.description}
+              </p>
+            </div>
+          </div>
+          </div>
           {/* Additional details - Commented out for now */}
           {/*
           <div className="w-fit mx-auto p-[2em]">
@@ -94,18 +109,7 @@ export default function ItemPage({ item }) {
           </div>
           */}
 
-          {/* Price section */}
-          <div className="flex justify-center mt-[3em]">
-            <div className="mx-auto text-center">
-              <h3 className="text-lg font-semibold mb-2">가격</h3>
-              <p className="text-gray-600">₩{item.price || 'Out of Stock'}</p>
 
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto mt-[3em]">
-                {item.description}
-              </p>
-            </div>
-          </div>
-        </div>
 
         <div className="flex justify-center mt-8">
           <PaymentButton item={item} />
@@ -113,7 +117,7 @@ export default function ItemPage({ item }) {
 
         {/* Description Image */}
         {item.descriptionImage && (
-          <div id="detailsPage" className="max-w-[1000px] mt-[6em] mx-auto">
+          <div id="detailsPage" className="max-w-[1000px] mt-[6em] mx-auto shadow-lg">
             <img
               src={item.descriptionImage}
               alt={`${item.name} - Product Details`}
@@ -121,6 +125,9 @@ export default function ItemPage({ item }) {
             />
           </div>
         )}
+        <div>
+          
+        </div>
       </main>
     </div>
       <Footer/>

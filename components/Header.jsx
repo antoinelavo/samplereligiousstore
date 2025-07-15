@@ -51,7 +51,7 @@ export default function ScrollHeader() {
   return (
     <>
       {/* Updated header with perfectly centered logo */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 mx-auto px-[1em] py-[1em] md:px-[2em] md:py-[2em] transition-all duration-300 ease-in-out
+      <nav className={`fixed top-0 left-0 right-0 z-50 mx-auto px-[1em] py-[1em] md:px-[2em] md:py-[2em] transition-all duration-300 ease-in-out shadow
         // isScrolled 
         //   ? 'translate-y-0 opacity-100 bg-white backdrop-blur-md shadow-lg' 
         //   : '-translate-y-full opacity-0'
