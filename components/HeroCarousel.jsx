@@ -9,7 +9,7 @@ const HeroCarousel = () => {
       id: 1,
       title: '바람의 향기',
       subtitle: 'odorem venti',
-      description: '반짝이는 원사로 촘초히 짜여진 망사의 고급스러움을 느끼실 수 있습니다.',
+      description: '반짝이는 원사로 촘촘히 짜여진 망사의 고급스러움을 느끼실 수 있습니다. 여기에 설명을 적으시면 됩니다.',
       price: '₩45,000',
       backgroundImage: '/images/veil1.jpg' // Replace with your actual image path
     },
@@ -17,7 +17,7 @@ const HeroCarousel = () => {
       id: 2,
       title: '바다의 별',
       subtitle: 'stella maris',
-      description: '반짝이는 원사로 촘초히 짜여진 망사의 고급스러움을 느끼실 수 있습니다.',
+      description: '반짝이는 원사로 촘촘히 짜여진 망사의 고급스러움을 느끼실 수 있습니다. 여기에 설명을 적으시면 됩니다.',
       price: '₩56,000',
       backgroundImage: '/images/veil2.jpg' // Replace with your actual image path
     },
@@ -25,7 +25,7 @@ const HeroCarousel = () => {
       id: 3,
       title: '은총의 시간',
       subtitle: 'gratia hora',
-      description: '반짝이는 원사로 촘초히 짜여진 망사의 고급스러움을 느끼실 수 있습니다.',
+      description: '반짝이는 원사로 촘촘히 짜여진 망사의 고급스러움을 느끼실 수 있습니다. 여기에 설명을 적으시면 됩니다.',
       price: '₩100,000',
       backgroundImage: '/images/veil3.jpg' // Replace with your actual image path
     }
@@ -81,20 +81,16 @@ const HeroCarousel = () => {
             {/* Current Slide Content */}
             <div className="space-y-8">
               <div className="space-y-4">
-                <p className="text-xs md:text-2xl font-light tracking-[0.3em] text-amber-600 uppercase opacity-0 animate-fade-in-up">
+                <p className="text-xs md:text-2xl font-medium tracking-[0.2em] text-amber-600 uppercase opacity-0 animate-fade-in-up">
                   {slides[currentSlide].subtitle}
                 </p>
-                <h1 className="text-2xl md:text-7xl lg:text-8xl font-medium tracking-tight text-zinc-900 opacity-0 animate-fade-in-up animation-delay-200">
+                <h1 className="text-2xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-zinc-900 opacity-0 animate-fade-in-up animation-delay-200">
                   {slides[currentSlide].title}
                 </h1>
-                <div className="w-24 h-px bg-amber-600/60 opacity-0 animate-fade-in-up animation-delay-400" />
               </div>
-              
-              <div className="space-y-6 opacity-0 animate-fade-in-up animation-delay-600">
-                <p className="text-sm md:text-lg font-light leading-loose text-zinc-700 max-w-xl">
-                  {slides[currentSlide].description}
-                </p>
-                <p className="text-sm md:text-xl font-light tracking-wide text-amber-600">
+        
+              <div className="opacity-0 animate-fade-in-up animation-delay-600">
+                <p className="text-sm md:text-xl font-medium tracking-wide text-amber-600">
                   {slides[currentSlide].price}
                 </p>
               </div>

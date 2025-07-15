@@ -16,9 +16,7 @@ export default function Footer({
             <div className="space-y-2 text-sm text-gray-800">
               <p>대표: {founder}</p>
               <p>사업자등록번호: {businessNumber}</p>
-              <p className="text-xs text-gray-600 mt-2">
-                © 2024 {companyName}. All rights reserved.
-              </p>
+
             </div>
           </div>
 

@@ -59,7 +59,7 @@ const ContentSection = ({
                 </p>
               )}
               
-              <h2 className="text-2xl md:text-5xl lg:text-6xl font-extralight tracking-tight text-zinc-900 leading-tight">
+              <h2 className="text-2xl md:text-5xl lg:text-6xl font-bold tracking-tight text-zinc-900 leading-tight">
                 {title}
               </h2>
               
