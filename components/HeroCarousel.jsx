@@ -69,7 +69,7 @@ const HeroCarousel = () => {
             </div>
 
             {/* Gradient Overlay for text readability */}
-            <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/70 to-white/30" />
+            <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/50 to-white/0" />
           </div>
         ))}
       </div>
