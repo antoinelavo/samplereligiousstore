@@ -81,27 +81,27 @@ const HeroCarousel = () => {
             {/* Current Slide Content */}
             <div className="space-y-8">
               <div className="space-y-4">
-                <p className="text-2xl font-light tracking-[0.3em] text-amber-600 uppercase opacity-0 animate-fade-in-up">
+                <p className="text-xs md:text-2xl font-light tracking-[0.3em] text-amber-600 uppercase opacity-0 animate-fade-in-up">
                   {slides[currentSlide].subtitle}
                 </p>
-                <h1 className="text-7xl lg:text-8xl font-medium tracking-tight text-zinc-900 opacity-0 animate-fade-in-up animation-delay-200">
+                <h1 className="text-2xl md:text-7xl lg:text-8xl font-medium tracking-tight text-zinc-900 opacity-0 animate-fade-in-up animation-delay-200">
                   {slides[currentSlide].title}
                 </h1>
                 <div className="w-24 h-px bg-amber-600/60 opacity-0 animate-fade-in-up animation-delay-400" />
               </div>
               
               <div className="space-y-6 opacity-0 animate-fade-in-up animation-delay-600">
-                <p className="text-lg font-light leading-loose text-zinc-700 max-w-xl">
+                <p className="text-sm md:text-lg font-light leading-loose text-zinc-700 max-w-xl">
                   {slides[currentSlide].description}
                 </p>
-                <p className="text-xl font-light tracking-wide text-amber-600">
+                <p className="text-sm md:text-xl font-light tracking-wide text-amber-600">
                   {slides[currentSlide].price}
                 </p>
               </div>
               
               <div className="flex gap-6 opacity-0 animate-fade-in-up animation-delay-800">
-                <button className="group relative overflow-hidden bg-transparent border border-amber-600/80 px-10 py-5 text-lg font-medium tracking-[0.2em] text-amber-600 transition-all duration-700 hover:text-white">
-                  <span className="relative z-10">제품 보기</span>
+                <button className="group relative overflow-hidden bg-transparent border border-amber-600/80 px-4 py-2 md:px-10 md:py-5 text-lg font-medium tracking-[0.2em] text-amber-600 transition-all duration-700 hover:text-white">
+                  <span className="relative z-10 text-sm md:text-lg">제품 보기</span>
                   <div className="absolute inset-0 bg-amber-600 transform -translate-x-full transition-transform duration-700 group-hover:translate-x-0" />
                 </button>
                 
@@ -111,46 +111,6 @@ const HeroCarousel = () => {
         </div>
       </div>
 
-      {/* Navigation Controls */}
-      <div className="absolute bottom-8 left-8 lg:left-12 z-20 flex items-center gap-8">
-        {/* Slide Indicators */}
-        <div className="flex gap-3">
-          {slides.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentSlide(index)}
-              className={`w-12 h-px transition-all duration-500 ${
-                index === currentSlide 
-                  ? 'bg-amber-600' 
-                  : 'bg-zinc-400 hover:bg-zinc-600'
-              }`}
-            />
-          ))}
-        </div>
-        
-        {/* Navigation Arrows */}
-        <div className="flex gap-4">
-          <button
-            onClick={prevSlide}
-            className="w-12 h-12 border border-zinc-400 hover:border-amber-600 flex items-center justify-center transition-all duration-500 group"
-          >
-            <ChevronLeft size={16} className="text-zinc-600 group-hover:text-amber-600 transition-colors duration-500" />
-          </button>
-          <button
-            onClick={nextSlide}
-            className="w-12 h-12 border border-zinc-400 hover:border-amber-600 flex items-center justify-center transition-all duration-500 group"
-          >
-            <ChevronRight size={16} className="text-zinc-600 group-hover:text-amber-600 transition-colors duration-500" />
-          </button>
-        </div>
-      </div>
-
-      {/* Slide Counter */}
-      <div className="absolute bottom-8 right-8 lg:right-12 z-20">
-        <p className="text-xs font-light tracking-[0.2em] text-zinc-600">
-          {String(currentSlide + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
-        </p>
-      </div>
 
       {/* Custom Styles */}
       <style jsx>{`

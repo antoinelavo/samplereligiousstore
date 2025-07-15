@@ -54,12 +54,12 @@ const ContentSection = ({
           <div className={`space-y-8 ${isContentLeft ? '' : 'lg:col-start-2'}`}>
             <div className="space-y-6">
               {subtitle && (
-                <p className={`text-lg font-light tracking-[0.2em] text-${accentColor} uppercase`}>
+                <p className={`text-sm md:text-lg font-light tracking-[0.2em] text-${accentColor} uppercase`}>
                   {subtitle}
                 </p>
               )}
               
-              <h2 className="text-5xl lg:text-6xl font-extralight tracking-tight text-zinc-900 leading-tight">
+              <h2 className="text-2xl md:text-5xl lg:text-6xl font-extralight tracking-tight text-zinc-900 leading-tight">
                 {title}
               </h2>
               
@@ -69,7 +69,7 @@ const ContentSection = ({
             <div className="space-y-6">
               {Array.isArray(description) ? (
                 description.map((paragraph, index) => (
-                  <p key={index} className="text-lg font-light leading-loose text-zinc-700">
+                  <p key={index} className="text-sm md:text-lg font-light leading-loose text-zinc-700">
                     {paragraph}
                   </p>
                 ))
@@ -115,7 +115,7 @@ const HeritageSections = () => {
   // Section 2: Handcraft Process
   const handcraftData = {
     subtitle: "수제작",
-    title: "정성스러운 손끝에서 탄생하는 작품",
+    title: "손끝에서 탄생하는 작품",
     description: [
       "모든 미사보는 오직 숙련된 장인의 손으로 제작됩니다.",
       "최상급 재질을 사용하여 하나하나 정성스럽게 바느질하고, 섬세한 자수 장식까지 수작업으로 완성합니다.",
