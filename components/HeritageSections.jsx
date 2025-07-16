@@ -18,7 +18,7 @@ const ContentSection = ({
       return (
         <div className="grid grid-cols-2 gap-6">
           {images.map((image, index) => (
-            <div key={index} className="aspect-square overflow-hidden bg-gray-100 rounded-lg">
+            <div key={index} className="aspect-square overflow-hidden bg-gray-100">
               <img 
                 src={image.src} 
                 alt={image.alt}
@@ -33,7 +33,7 @@ const ContentSection = ({
     // Single image layout
     const mainImage = Array.isArray(images) ? images[0] : images;
     return (
-      <div className="aspect-[4/3] overflow-hidden bg-gray-100 rounded-lg">
+      <div className="aspect-[4/3] overflow-hidden bg-gray-100">
         <img 
           src={mainImage.src} 
           alt={mainImage.alt}

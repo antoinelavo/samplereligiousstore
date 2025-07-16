@@ -50,13 +50,13 @@ export default function Items({
                   <img 
                     src={item.image} 
                     alt={item.name || item.title}
-                    className={`${imageClassName} transition-opacity duration-300 group-hover:opacity-0 rounded-lg`}
+                    className={`${imageClassName} transition-opacity duration-300 group-hover:opacity-0 `}
                   />
                   {/* Hover image */}
                   <img 
                     src={hoverImage} 
                     alt={`${item.name || item.title} - hover`}
-                    className={`${imageClassName} absolute inset-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100 rounded-lg`}
+                    className={`${imageClassName} absolute inset-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100 `}
                   />
                 </div>
             </a>

@@ -33,7 +33,7 @@ export default function ItemPage({ item }) {
         <div className="max-w-6xl mx-auto">
           {/* Main image display */}
           <div className="mb-8">
-            <div className="relative aspect-[1/1] max-w-xl mx-auto bg-gray-100 overflow-hidden rounded-lg shadow-lg">
+            <div className="relative aspect-[1/1] max-w-xl mx-auto bg-gray-100 overflow-hidden shadow-lg">
               <img
                 src={item.images[selectedImage]}
                 alt={`${item.name} - Image ${selectedImage + 1}`}
@@ -50,7 +50,7 @@ export default function ItemPage({ item }) {
                 <button
                   key={index}
                   onClick={() => setSelectedImage(index)}
-                  className={`relative w-20 aspect-[1/1] overflow-hidden border-2 transition-all duration-200 rounded-lg ${
+                  className={`relative w-20 aspect-[1/1] overflow-hidden border-2 transition-all duration-200 ${
                     selectedImage === index 
                       ? 'border-black scale-105' 
                       : 'border-gray-200 hover:border-gray-400'
@@ -73,7 +73,7 @@ export default function ItemPage({ item }) {
 
             {/* Price section */}
             <div className="text-left md:text-center">
-              <p className="text-gray-600"><span>
+              <p className="text-amber-600"><span>
                                             ₩{ 
                                               item.price != null 
                                                 ? item.price.toLocaleString('ko-KR') 
@@ -122,7 +122,7 @@ export default function ItemPage({ item }) {
             <img
               src={item.descriptionImage}
               alt={`${item.name} - Product Details`}
-              className="w-full h-auto object-contain rounded-lg"
+              className="w-full h-auto object-contain"
             />
           </div>
         )}

@@ -625,7 +625,7 @@ export default function AdminDashboard() {
             >
               상품 관리
             </button>
-            <button
+            {/* <button
               onClick={() => setActiveTab('hero')}
               className={`px-4 py-2 font-medium text-sm rounded-t-lg transition-colors ${
                 activeTab === 'hero'
@@ -634,7 +634,7 @@ export default function AdminDashboard() {
               }`}
             >
               히어로 섹션 관리
-            </button>
+            </button> */}
             <button
               onClick={() => setActiveTab('logo')}
               className={`px-4 py-2 font-medium text-sm rounded-t-lg transition-colors ${
@@ -944,7 +944,7 @@ export default function AdminDashboard() {
 
                       {/* Description Image Indicator */}
                       {item.descriptionImage && (
-                        <div className="absolute bottom-2 left-2 z-10 bg-purple-600 text-white px-2 py-1 rounded-full text-xs">
+                        <div className="absolute bottom-2 right-2 z-10 bg-purple-600 text-white px-2 py-1 rounded-full text-xs">
                           상세이미지
                         </div>
                       )}
